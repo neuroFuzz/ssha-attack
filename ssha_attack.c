@@ -290,7 +290,8 @@ int main(int argc, char *argv[]) {
                         break;
         case 11:        strncpy (alphabet, set11, strlen (set11) );   break;
         case 20:	strncpy (alphabet, custom, strlen (custom) ); break;
-        default:        error (1, 0, "Unknown alphabet set");
+        default:        fprintf (stderr, "Unknown alphabet set");
+                        exit(1);
       }
 
       if ((custom != NULL) && (max == 0))

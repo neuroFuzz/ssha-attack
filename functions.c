@@ -225,7 +225,7 @@ Return:   Length of the hash
 ------------------------------------------------------------------------------------ */
 int GenerateHash(const char* digest, const char* value, const char* salt, char* buffer) {
 
-  EVP_MD_CTX mdctx;                         // OpenSSL variables
+  EVP_MD_CTX *mdctx;                         // OpenSSL variables
   const EVP_MD *md;
   unsigned char md_value[EVP_MAX_MD_SIZE];
   unsigned int md_len, i;
@@ -242,24 +242,26 @@ int GenerateHash(const char* digest, const char* value, const char* salt, char* 
     return -1;
   }
 
-  EVP_MD_CTX_init(&mdctx);
-  EVP_DigestInit_ex(&mdctx, md, NULL);      // Initialize the digest
-  EVP_DigestUpdate(&mdctx,                  // Add the clear text password to the digest
+//  EVP_MD_CTX_init(mdctx);
+  mdctx = EVP_MD_CTX_new();
+  EVP_DigestInit_ex(mdctx, md, NULL);      // Initialize the digest
+  EVP_DigestUpdate(mdctx,                  // Add the clear text password to the digest
                    value,
                    (unsigned int) strlen(value));
 
   if(salt) {
-    EVP_DigestUpdate(&mdctx,                // If we have a salt, add that to the digest as well
+    EVP_DigestUpdate(mdctx,                // If we have a salt, add that to the digest as well
                      salt,
                      (unsigned int) strlen(value));
   }
 
-  EVP_DigestFinal_ex(&mdctx,                // Create the hash
+  EVP_DigestFinal_ex(mdctx,                // Create the hash
                      md_value,
                      &md_len);
 
 
-  EVP_MD_CTX_cleanup(&mdctx);                // Do some cleanup
+//  EVP_MD_CTX_cleanup(&mdctx);                // Do some cleanup
+  EVP_MD_CTX_free(mdctx);                // Do some cleanup
   
   for(i = 0; i < md_len; i++) {
     sprintf(&buffer[i*2], "%02x", md_value[i]);// copy the hex values into the buffer

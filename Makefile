@@ -1,5 +1,5 @@
 CFLAGS = -O3
-LIBS = -lssl
+LIBS = -lssl -lcrypto
 OBJS = functions.o ssha_attack.o
 
 all: $(OBJS) 
