@@ -1,0 +1,10 @@
+The following credits go out because these snippets of code do what they do so well that I didnt see the sense in writing from scratch.
+
+In functions.c the Permutate function is based on unicell's permute function, found at http://www.daniweb.com/code/snippet537.html
+
+In functions.c the CPABrute function is based on Dave Hope's BeginBrute function from his MD5 Brute Force Tool.  Code can be seen here: http://davehope.co.uk/Projects/C-MD5.tar.bz2
+
+In functions.c the DecodeBase64 function is based on code from ffsniff.c found at http://www.imperialviolet.org/binary/ffsniff.c and written by Adam Langley.
+
+Special thanx to both James Stanley Brooks <ckjamesb at netscape dot net> and Roland Cozzolino <rcozzolino at verizon dot net> for either direct or indirect help with the creation of SSHA Attack.
+
