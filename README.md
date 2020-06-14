@@ -25,7 +25,7 @@ Before using the prog decide what attack model you want to follow.
 Your current choices are:
 
 Dictionary based attack (-d)
-Brute force incremental attack with a predefined alphabet (that you choose) (-a [1 - 10] and -n)
+Brute force incremental attack with a predefined alphabet (that you choose) (-a [1 - 11] and -n)
 Brute force attack with a custom alphabet you provide (-a 20 and -c)
 Brute force incremental attack with a custom alphabet you provide (-a 20 and -c and -n)
 
