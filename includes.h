@@ -9,7 +9,7 @@
 
 #include <openssl/evp.h>
 #include <openssl/bio.h>
-#include <openssl/ssl.h> 
+#include <openssl/ssl.h>
 
 /* ------------------------------------------------------------------------------------
         DEFINITIONS
@@ -23,25 +23,30 @@
 /* ------------------------------------------------------------------------------------
         FORWARD DECLARATIONS
 ------------------------------------------------------------------------------------ */
-int ValidatePassword(const char* requestPW, const char* storedPW, const char *hashtype);
-int GenerateHash(const char* digest, const char* value, const char* salt, char* buffer);
-int DecodeBase64(char *out, const char *in);
-int WithinBounds (const char *source);
-int WithinSSHABounds (const char *source);
-int WithinGivenBounds (const char *source, int bound);
-int WithinGivenIntBounds (int begin, int bound, int target);
-int Permutate(char* set, char *inhash, int begin, int end, time_t t0, const char *hashtype);
-void SetHashType(char *buffer, char *hash);
-void ToHex(const unsigned char* temp, char* target, int n);
-void PrintTimeDiff(time_t t1, time_t t0);
-void stripnl(char *str);
+int ValidatePassword(const char *, const char *, const char *);
+int GenerateHash(const char *, const char *, const char *, char *);
+int DecodeBase64(char *, const char *);
+int WithinBounds (const char *);
+int WithinSSHABounds (const char *);
+int WithinGivenBounds (const char *, int);
+int WithinGivenIntBounds (int, int, int);
+int Permutate(char *, char *, int, int, time_t, const char *);
+int genident(char *, char *, int, time_t, const char *);
+void SetHashType(char *, char *);
+void ToHex(const unsigned char *, char *, int);
+void PrintTimeDiff(time_t, time_t);
+void stripnl(char *);
+void doDictAttack(char *, char *, time_t, const char *);
+void OutputSecondsToDay(int);
+void doBruteForceAttack(char *, char *, time_t, const char *);
+void CPABrute(char *, char [], time_t, const char *, int, int);
 
-static const char *pUsage = 
+static const char *pUsage =
   "\n  Usage: ./ssha_attack -m mode [-d attack_dictionary_file | [-n min] -u max -a alphabet | -a 20 -c custom_alphabet] -s SSHA_hash_string\n\n"
   "  -m  This is the mode for the prog to operate under.  The currently supported modes\n"
   "      are \"dictionary\" and \"brute-force\".  This switch is required.\n\n"
   "  -d  This option is to be used to engage \"dictionary\" mode.\n"
-  "      The dictionary is a regular text file containing one entry per line.\n"  
+  "      The dictionary is a regular text file containing one entry per line.\n"
   "      The data from this file is what will be used as the clear text data\n"
   "      to which the discovered salt will get applied.\n\n"
   "  -l  The minimum amount of attack characters to begin with.\n\n"
@@ -70,4 +75,3 @@ static const char *pUsage =
   "      This can also force an incremental attack when coupled with the -n switch\n\n"
   "  -s  The SSHA hash string that will be attacked.  This must be a Base64 encoded string. \n"
   "      This switch is required.\n\n";
-
