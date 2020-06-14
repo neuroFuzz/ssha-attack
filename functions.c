@@ -1,9 +1,9 @@
 /* ------------------------------------------------------------------------------------
-Author:   Andres Andreu <http://xri.net/=andres.andreu>
+Author:   Andres Andreu <andres [at] neurofuzzsecurity dot com>
 
 Date:     Jan 2008
 
-Version:  0.4
+Version:  0.5
 
 Desc:     This is simply a file of mixed functions for the SSHA attack tool.
 
@@ -48,7 +48,7 @@ void stripnl(char *str) {
 
 /* ------------------------------------------------------------------------------------
 Function: substring_r
-Params:   char* --> the char array to hold resulting data 
+Params:   char* --> the char array to hold resulting data
           char* --> the char array to be processed
           int --> starting index
           int --> ending index
@@ -117,7 +117,7 @@ int WithinSSHABounds (const char *source) {
 
 /* ------------------------------------------------------------------------------------
 Function: WithinGivenIntBounds
-Params:   int --> the lower bound 
+Params:   int --> the lower bound
           int --> the upper bound
           int --> the num to check
 Desc:     Performs boundary check on the param data
@@ -262,7 +262,7 @@ int GenerateHash(const char* digest, const char* value, const char* salt, char* 
 
 //  EVP_MD_CTX_cleanup(&mdctx);                // Do some cleanup
   EVP_MD_CTX_free(mdctx);                // Do some cleanup
-  
+
   for(i = 0; i < md_len; i++) {
     sprintf(&buffer[i*2], "%02x", md_value[i]);// copy the hex values into the buffer
   }
@@ -279,8 +279,8 @@ Desc:     Checks the clear text string for matches after applying
           the salt extracted from the known salted SHA hash.
 Return:   Success: 1 (the passwords match)
           Failure: 0
-Notes:    The data from LDAP (SSHA hash) has to be a base-64 encoded string.  
-          This needs to be decoded back to binary and then encoded as hex 
+Notes:    The data from LDAP (SSHA hash) has to be a base-64 encoded string.
+          This needs to be decoded back to binary and then encoded as hex
           for comparison purposes.
 ------------------------------------------------------------------------------------ */
 int ValidatePassword(const char *requestPW, const char *storedPW, const char *hashtype) {
@@ -307,14 +307,14 @@ int ValidatePassword(const char *requestPW, const char *storedPW, const char *ha
 
     if(strstr(storedPW, "{SSHA")) {
       if (strcmp(hashtype, "SHA1") == 0) {
-        start = strlen("{SSHA}");                          
+        start = strlen("{SSHA}");
       } else {
         start = 9;
       }
       strcpy(binaryPW, storedPW);                        // copy storedPW into binaryPW
       int n = DecodeBase64(temp, binaryPW + start);      // base-64 decode into temp
-     
-      if (strcmp(hashtype, "SHA1") == 0) { 
+
+      if (strcmp(hashtype, "SHA1") == 0) {
         strcpy(tempSalt, temp + 20);                     // grab salt from temp & cpy to tempSalt
       } else if (strcmp(hashtype, "SHA224") == 0) {
         strcpy(tempSalt, temp + 28);
@@ -326,8 +326,8 @@ int ValidatePassword(const char *requestPW, const char *storedPW, const char *ha
         strcpy(tempSalt, temp + 64);
       }
       ToHex(temp, tempArr, n);                           // conv to hex in tempArr
-     
-      if (strcmp(hashtype, "SHA1") == 0) { 
+
+      if (strcmp(hashtype, "SHA1") == 0) {
         strncpy(formattedPW, tempArr, 40);               // chop this down to char's as hex in formattedPW
       } else if (strcmp(hashtype, "SHA224") == 0) {
         strncpy(formattedPW, tempArr, 56);
@@ -355,14 +355,15 @@ int ValidatePassword(const char *requestPW, const char *storedPW, const char *ha
 
 /* ------------------------------------------------------------------------------------
 Function: PrintTimeDiff
-Params:   time_t --> timestamp of prog run 
+Params:   time_t --> timestamp of prog run
           time_t --> timestamp of prog inititation
 Desc:     Calculates the diff between 2 time_t values and displays it.
 Return:   Nothing
 ------------------------------------------------------------------------------------ */
 void PrintTimeDiff(time_t t1, time_t t0) {
 
-  printf ("Elapsed time in seconds for successful attack: %ld\n", (long) (t1 - t0));
+    printf ("Elapsed time in seconds for successful attack: %ld\n", (long) (t1 - t0));
+    OutputSecondsToDay((int)(t1 - t0));
 
 }
 
@@ -373,9 +374,9 @@ Params:   char* --> the SSHA hash from the LDAP server
           time_t --> start time for porg execution
           const char* --> type of hash
 Desc:     Reads the data in from the dictionary file.
-          Then it iterates over the data from the dictionary and 
+          Then it iterates over the data from the dictionary and
           calls ValidatePassword with each clear text attack vector
-          and the SSHA hash submitted via command line. 
+          and the SSHA hash submitted via command line.
 Return:   Nothing
 ------------------------------------------------------------------------------------ */
 void doDictAttack(char *inhash, char *dictfile, time_t t0, const char *hashtype) {
@@ -421,22 +422,23 @@ Params:   char* --> the traget SSHA hash string
           char* --> the data to be used for brute forcing
           time_t --> start time for porg execution
           const char* --> type of hash
-Desc:     Simple wrapper function that calls necessary functions to effect the 
+Desc:     Simple wrapper function that calls necessary functions to effect the
           brute force attack.
 Return:   Nothing
 ------------------------------------------------------------------------------------ */
 void doBruteForceAttack(char *inhash, char *alphabet, time_t t0, const char *hashtype) {
-  genident(alphabet, inhash, strlen(alphabet), t0, hashtype);
 
-  if (Permutate(alphabet, inhash, 0, strlen(alphabet), t0, hashtype) == 0) {
-    printf("\nNo hits from the permutation process\n\n");
-  }
+    genident(alphabet, inhash, strlen(alphabet), t0, hashtype);
+
+    if (Permutate(alphabet, inhash, 0, strlen(alphabet), t0, hashtype) == 0) {
+        printf("\nNo hits from the permutation process\n\n");
+    }
 
 }
 
 /* ------------------------------------------------------------------------------------
 Function: swap
-Params:   char* --> the data source 
+Params:   char* --> the data source
           char* --> the data destination
 Desc:     Performs an in line swap of data from one pointer to another.
 Return:   Nothing
@@ -454,8 +456,8 @@ Params:   char* --> the char array to be processed
           int --> size boundary
           time_t --> start time for porg execution
           const char* --> type of hash
-Desc:     Generates attack vectors of each unique character from set . 
-          For each generated word (attack vector) a call to the ValidatePassword 
+Desc:     Generates attack vectors of each unique character from set .
+          For each generated word (attack vector) a call to the ValidatePassword
           function is made, upon a match processing will cease.
 Return:   0 if there is no match of data
 ------------------------------------------------------------------------------------ */
@@ -607,3 +609,22 @@ void CPABrute(char *inhash, char Alphabet[], time_t t0, const char *hashtype, in
 
 }
 
+
+void OutputSecondsToDay(int n) {
+
+    printf("GOT: %d\n\n", n);
+
+    int day = n / (24 * 3600);
+
+    n = n % (24 * 3600);
+    int hour = n / 3600;
+
+    n %= 3600;
+    int minutes = n / 60;
+
+    n %= 60;
+    int seconds = n;
+
+    printf("Elapsed time: Day(s): %d, Hour(s): %d, Minutes: %d, Seconds: %d\n\n", day, hour, minutes, seconds);
+
+}
