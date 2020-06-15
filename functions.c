@@ -9,7 +9,7 @@ Desc:     This is simply a file of mixed functions for the SSHA attack tool.
 
 License:  The MIT License
 
-Copyright (c) 2007 Andres Andreu
+Copyright (c) 2007 - 2020 Andres Andreu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
