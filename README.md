@@ -29,6 +29,51 @@ Brute force incremental attack with a predefined alphabet (that you choose) (-a 
 Brute force attack with a custom alphabet you provide (-a 20 and -c)
 Brute force incremental attack with a custom alphabet you provide (-a 20 and -c and -n)
 
+
+Usage:
+
+./ssha_attack -m mode [-d attack_dictionary_file | [-n min] -u max -a alphabet | -a 20 -c custom_alphabet] -s SSHA_hash_string
+
+  -m  This is the mode for the prog to operate under.  The currently supported modes
+      are "dictionary" and "brute-force".  This switch is required.
+
+  -d  This option is to be used to engage "dictionary" mode.
+      The dictionary is a regular text file containing one entry per line.
+      The data from this file is what will be used as the clear text data
+      to which the discovered salt will get applied.
+
+  -l  The minimum amount of attack characters to begin with.
+
+  -u  The maximum amount of attack characters to use. If -l is not used processing
+      will start with size 1
+
+  -a  The numerical index of the attack alphabet to use:
+      	1. Numbers only
+      	2. lowercase hex
+      	3. UPPERCASE HEX
+      	4. lowercase alpha characters
+      	5. UPPERCASE ALPHA characters
+      	6. lowercase alphanumeric characters
+      	7. UPPERCASE ALPHANUMERIC characters
+      	8. lowercase & UPPERCASE ALPHA characters
+      	9. lowercase & UPPERCASE ALPHAnumeric characters
+      	10. All printable ASCII characters
+      	11. lowercase & UPPERCASE ALPHAnumeric characters, as well as:
+      	    !"£$%^&*()_+-=[]{}'#@~,.<>?/|
+      	20. Custom alphabet - must be used with -c switch
+
+  -c  The custom attack alphabet to use, for example abcABC123!
+      Take note that this forces a permutation based process so the larger the alphabet
+      the longer the process will take. Also, when used with the -a 20 switch, but
+      not the -u switch, the permutations are all based on the size of the alphabet
+      you submit.
+      Using the example from above all permutations would be 10 characters in length.
+      This can also force an incremental attack when coupled with the -n switch
+
+  -s  The SSHA hash string that will be attacked.  This must be a Base64 encoded string.
+      This switch is required.
+
+
 To run:
 
 ############### Dictionary attack ######################################
