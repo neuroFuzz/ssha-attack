@@ -15,8 +15,8 @@ The OpenSSL lib's are required.
 
 To compile untar and:
 
-make clean
-make
+    make clean
+    make
 
 The prog should compile cleanly on any recent version of x-86 based Linux.
 It was created on Fedora Core 5.
@@ -24,54 +24,54 @@ It was created on Fedora Core 5.
 Before using the prog decide what attack model you want to follow.  
 Your current choices are:
 
-Dictionary based attack (-d)
-Brute force incremental attack with a predefined alphabet (that you choose) (-a [1 - 11] and -n)
-Brute force attack with a custom alphabet you provide (-a 20 and -c)
-Brute force incremental attack with a custom alphabet you provide (-a 20 and -c and -n)
+    Dictionary based attack (-d)
+    Brute force incremental attack with a predefined alphabet (that you choose) (-a [1 - 11] and -n)
+    Brute force attack with a custom alphabet you provide (-a 20 and -c)
+    Brute force incremental attack with a custom alphabet you provide (-a 20 and -c and -n)
 
 
 Usage:
 
-./ssha_attack -m mode [-d attack_dictionary_file | [-n min] -u max -a alphabet | -a 20 -c custom_alphabet] -s SSHA_hash_string
+    ./ssha_attack -m mode [-d attack_dictionary_file | [-l min] -u max -a alphabet | -a 20 -c custom_alphabet] -s SSHA_hash_string
 
-  -m  This is the mode for the prog to operate under.  The currently supported modes
-      are "dictionary" and "brute-force".  This switch is required.
+      -m  This is the mode for the prog to operate under.  The currently supported modes
+          are "dictionary" and "brute-force".  This switch is required.
 
-  -d  This option is to be used to engage "dictionary" mode.
-      The dictionary is a regular text file containing one entry per line.
-      The data from this file is what will be used as the clear text data
-      to which the discovered salt will get applied.
+      -d  This option is to be used to engage "dictionary" mode.
+          The dictionary is a regular text file containing one entry per line.
+          The data from this file is what will be used as the clear text data
+          to which the discovered salt will get applied.
 
-  -l  The minimum amount of attack characters to begin with.
+      -l  The minimum amount of attack characters to begin with.
 
-  -u  The maximum amount of attack characters to use. If -l is not used processing
-      will start with size 1
+      -u  The maximum amount of attack characters to use. If -l is not used processing
+          will start with size 1
 
-  -a  The numerical index of the attack alphabet to use:
-      	1. Numbers only
-      	2. lowercase hex
-      	3. UPPERCASE HEX
-      	4. lowercase alpha characters
-      	5. UPPERCASE ALPHA characters
-      	6. lowercase alphanumeric characters
-      	7. UPPERCASE ALPHANUMERIC characters
-      	8. lowercase & UPPERCASE ALPHA characters
-      	9. lowercase & UPPERCASE ALPHAnumeric characters
-      	10. All printable ASCII characters
-      	11. lowercase & UPPERCASE ALPHAnumeric characters, as well as:
-      	    !"£$%^&*()_+-=[]{}'#@~,.<>?/|
-      	20. Custom alphabet - must be used with -c switch
+      -a  The numerical index of the attack alphabet to use:
+          	1. Numbers only
+          	2. lowercase hex
+          	3. UPPERCASE HEX
+          	4. lowercase alpha characters
+          	5. UPPERCASE ALPHA characters
+          	6. lowercase alphanumeric characters
+          	7. UPPERCASE ALPHANUMERIC characters
+          	8. lowercase & UPPERCASE ALPHA characters
+          	9. lowercase & UPPERCASE ALPHAnumeric characters
+          	10. All printable ASCII characters
+          	11. lowercase & UPPERCASE ALPHAnumeric characters, as well as:
+          	    !"£$%^&*()_+-=[]{}'#@~,.<>?/|
+          	20. Custom alphabet - must be used with -c switch
 
-  -c  The custom attack alphabet to use, for example abcABC123!
-      Take note that this forces a permutation based process so the larger the alphabet
-      the longer the process will take. Also, when used with the -a 20 switch, but
-      not the -u switch, the permutations are all based on the size of the alphabet
-      you submit.
-      Using the example from above all permutations would be 10 characters in length.
-      This can also force an incremental attack when coupled with the -n switch
+      -c  The custom attack alphabet to use, for example abcABC123!
+          Take note that this forces a permutation based process so the larger the alphabet
+          the longer the process will take. Also, when used with the -a 20 switch, but
+          not the -u switch, the permutations are all based on the size of the alphabet
+          you submit.
+          Using the example from above all permutations would be 10 characters in length.
+          This can also force an incremental attack when coupled with the -n switch
 
-  -s  The SSHA hash string that will be attacked.  This must be a Base64 encoded string.
-      This switch is required.
+      -s  The SSHA hash string that will be attacked.  This must be a Base64 encoded string.
+          This switch is required.
 
 
 To run:
@@ -79,44 +79,44 @@ To run:
 ############### Dictionary attack ######################################
 Dictionary based attack
 
-./ssha_attack -m dictionary -d dictionary.txt -s {SSHA}1sx3RjtI6KLpqb3hHPDTKqIVBd9UukC3
+    ./ssha_attack -m dictionary -d dictionary.txt -s {SSHA}1sx3RjtI6KLpqb3hHPDTKqIVBd9UukC3
 
 ############### Dictionary attack ######################################
 
 ############### Brute-Force incremental ################################
 Brute force attack with a predefined alphabet (that you choose)
 
-./ssha_attack -m brute-force -a 4 -n 3 -s {SSHA}Ig272xI9C9H4kvL8vHA6UcK57Y4ad97O
+    ./ssha_attack -m brute-force -a 4 -l 3 -u 10 -s {SSHA}Ig272xI9C9H4kvL8vHA6UcK57Y4ad97O
 
 Here are some examples from when I was unit testing:
 
 
-./ssha_attack -m brute-force -n 3 -a 9 -s {SSHA}EEiUTlF29/g8H6GlqVJT8JtGhmMkeU4S
+    ./ssha_attack -m brute-force -l 3 -u 9 -a 9 -s {SSHA}EEiUTlF29/g8H6GlqVJT8JtGhmMkeU4S
 
-Hash Algorithm Detected: SHA1
-
-
-Trying Word Length: 3
-
-There is a match on value "3ee"
-
-Elapsed time in seconds for successful attack: 5
+    Hash Algorithm Detected: SHA1
 
 
+    Trying Word Length: 3
 
-./ssha_attack -m brute-force -a 9 -n 3 -s Tt8H7clbL9y8ryN4/RLYrCEsKqbjJsWcPmKb4wOdZDJzYWx0
+    There is a match on value "3ee"
 
-Hash Algorithm Detected: SHA256
+    Elapsed time: Day(s): 0, Hour(s): 0, Minutes: 0, Seconds: 0
 
 
-Trying Word Length: 3
-No hits for Word Length: 3
 
-Trying Word Length: 4
+    ./ssha_attack -m brute-force -a 9 -l 3 -u 10 -s Tt8H7clbL9y8ryN4/RLYrCEsKqbjJsWcPmKb4wOdZDJzYWx0
 
-There is a match on value "test"
+    Hash Algorithm Detected: SHA256
 
-Elapsed time in seconds for successful attack: 91
+
+    Trying Word Length: 3
+    No hits for Word Length: 3
+
+    Trying Word Length: 4
+
+    There is a match on value "test"
+
+    Elapsed time: Day(s): 0, Hour(s): 0, Minutes: 0, Seconds: 23
 
 
 
@@ -209,6 +209,7 @@ Trying Word Length: 7
 There is a match on value "testees"
 
 Elapsed time in seconds for successful attack: 0
+
 
 ############### Brute Force incremental with Custom Alphabet ###########
 
