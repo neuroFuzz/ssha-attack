@@ -120,22 +120,22 @@ Here are some examples from when I was unit testing:
 
 
 
-./ssha_attack -m brute-force -n 3 -a 9 -s {SSHA}PT8wnRusJxl3E7JnW6ufaFNiO6RWy6qH
+    ./ssha_attack -m brute-force -l 3 -u 15 -a 9 -s {SSHA}PT8wnRusJxl3E7JnW6ufaFNiO6RWy6qH
 
-Hash Algorithm Detected: SHA1
+    Hash Algorithm Detected: SHA1
 
 
-Trying Word Length: 3
-No hits for Word Length: 3
+    Trying Word Length: 3
+    No hits for Word Length: 3
 
-Trying Word Length: 4
-No hits for Word Length: 4
+    Trying Word Length: 4
+    No hits for Word Length: 4
 
-Trying Word Length: 5
+    Trying Word Length: 5
 
-There is a match on value "Yt35T"
+    There is a match on value "Yt35T"
 
-Elapsed time in seconds for successful attack: 10796
+    Elapsed time: Day(s): 0, Hour(s): 0, Minutes: 39, Seconds: 42
 
 
 ############### Brute-Force incremental ################################
@@ -143,72 +143,70 @@ Elapsed time in seconds for successful attack: 10796
 ############### Custom Alphabet ########################################
 Brute force attack with a custom alphabet you provide
 
-./ssha_attack -m brute-force -a 20 -c custom -s {SSHA}iLWyP3dJamxdFc6sHLSJErt69+mb6en+
+    ./ssha_attack -m brute-force -a 20 -c custom -s {SSHA}iLWyP3dJamxdFc6sHLSJErt69+mb6en+
 
 Here are some examples from when I was unit testing:
 
+    ./ssha_attack -m brute-force -a 20 -c "#h5sa3l" -s {SSHA384}hZJ29z/c3f1Lms5Xid2L+wuXbNWcg87SM5I5/BCcYBRwDlYUxgxvCqMvAdQPnDgiOTBhYjE4OWY= -l 3 -u 12
 
-./ssha_attack -m brute-force -a 20 -c "#hlsas" -s {SSHA}NhLfEHbVFjgBswQEgmnQdMf7/WmrPayi
-
-Hash Algorithm Detected: SHA1
-
-
-No hits with identical values for the alphabet ...
+    Hash Algorithm Detected: SHA384
 
 
-There is a match on value "sl#ash"
+    Trying Word Length: 3
+    No hits for Word Length: 3
 
-Elapsed time in seconds for successful attack: 0
+    Trying Word Length: 4
+    No hits for Word Length: 4
 
+    Trying Word Length: 5
+    No hits for Word Length: 5
 
+    Trying Word Length: 6
+    No hits for Word Length: 6
 
-./ssha_attack -m brute-force -a 20 -c "#slsah" -s CtUnKbdMFKl4lX7/82QYX4aZXrENlR8gRhM0ViB504JzYWx0
+    Trying Word Length: 7
+    No hits for Word Length: 7
 
-Hash Algorithm Detected: SHA256
+    Trying Word Length: 8
 
+    There is a match on value "l3a#5h3l"
 
-No hits with identical values for the alphabet ...
-
-
-There is a match on value "sl#ash"
-
-Elapsed time in seconds for successful attack: 0
+    Elapsed time: Day(s): 0, Hour(s): 0, Minutes: 0, Seconds: 49
 
 ############### Custom Alphabet ########################################
 
 ############### Brute Force incremental with Custom Alphabet ###########
 Brute force incremental attack with a custom alphabet you provide
 
-./ssha_attack -m brute-force -a 20 -c custom -n 2 -s {SSHA}owN4fkZDoCeXo4iw1fzqWe9u4/79vrfQ
-
+    ./ssha_attack -m brute-force -a 20 -c custom -n 2 -s {SSHA}owN4fkZDoCeXo4iw1fzqWe9u4/79vrfQ
 
 Here is an example from when I was unit testing:
 
-./ssha_attack -m brute-force -a 20 -c tse -n 2 -s {SSHA256}H0fvfbrcXAzg3uAYesE5babwQGbTsFdhphdJ1jaUEUxzYWx0
+    ./ssha_attack -m brute-force -a 20 -c tse -l 2 -u 10 -s {SSHA256}H0fvfbrcXAzg3uAYesE5babwQGbTsFdhphdJ1jaUEUxzYWx0
 
-Hash Algorithm Detected: SHA256
+    Hash Algorithm Detected: SHA256
 
 
-Trying Word Length: 2
-No hits for Word Length: 2
+    Trying Word Length: 2
+    No hits for Word Length: 2
 
-Trying Word Length: 3
-No hits for Word Length: 3
+    Trying Word Length: 3
+    No hits for Word Length: 3
 
-Trying Word Length: 4
-No hits for Word Length: 4
+    Trying Word Length: 4
+    No hits for Word Length: 4
 
-Trying Word Length: 5
-No hits for Word Length: 5
+    Trying Word Length: 5
+    No hits for Word Length: 5
 
-Trying Word Length: 6
-No hits for Word Length: 6
+    Trying Word Length: 6
+    No hits for Word Length: 6
 
-Trying Word Length: 7
+    Trying Word Length: 7
 
-There is a match on value "testees"
+    There is a match on value "testees"
 
-Elapsed time in seconds for successful attack: 0
+    Elapsed time: Day(s): 0, Hour(s): 0, Minutes: 0, Seconds: 0
 
 
 ############### Brute Force incremental with Custom Alphabet ###########

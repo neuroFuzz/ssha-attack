@@ -635,6 +635,6 @@ void OutputSecondsToDay(int n) {
     n %= 60;
     int seconds = n;
 
-    printf("Elapsed time: Day(s): %d, Hour(s): %d, Minutes: %d, Seconds: %d\n\n", day, hour, minutes, seconds);
+    printf("Elapsed time: Day(s): %d, Hour(s): %d, Minute(s): %d, Second(s): %d\n\n", day, hour, minutes, seconds);
 
 }
