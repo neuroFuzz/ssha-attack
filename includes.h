@@ -42,7 +42,7 @@ void doBruteForceAttack(char *, char *, time_t, const char *);
 void CPABrute(char *, char [], time_t, const char *, int, int);
 
 static const char *pUsage =
-  "\n  Usage: ./ssha_attack -m mode [-d attack_dictionary_file | [-n min] -u max -a alphabet | -a 20 -c custom_alphabet] -s SSHA_hash_string\n\n"
+  "\n  Usage: ./ssha_attack -m mode [-d attack_dictionary_file | [-l min] -u max -a alphabet | -a 20 -c custom_alphabet] -s SSHA_hash_string\n\n"
   "  -m  This is the mode for the prog to operate under.  The currently supported modes\n"
   "      are \"dictionary\" and \"brute-force\".  This switch is required.\n\n"
   "  -d  This option is to be used to engage \"dictionary\" mode.\n"
