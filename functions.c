@@ -3,6 +3,8 @@ Author:   Andres Andreu <andres [at] neurofuzzsecurity dot com>
 
 Date:     Jan 2008
 
+Updated:  June 2020  
+
 Version:  0.5
 
 Desc:     This is simply a file of mixed functions for the SSHA attack tool.

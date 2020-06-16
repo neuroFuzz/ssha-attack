@@ -3,6 +3,8 @@ Author:   Andres Andreu <andres [at] neurofuzzsecurity dot com>
 
 Date:     Jan 2008
 
+Updated:  June 2020
+
 Version:  0.5
 
 Desc:
@@ -23,9 +25,9 @@ How you generate or obtain the attack dictionary files is also your
 problem. Just remember that dictionary attacks are only as good
 as the dictionary files used for the process.
 
-The code was compiled on a Linux (x-86) based OS using OpenSSL 0.9.8, since
-the OpenSSL API's changed from 0.9.7 on it probably wont compile cleanly
-on a system using 0.9.6 or less.
+The code was originally compiled on a Linux (x-86) based OS using
+OpenSSL 0.9.8. Version 0.5 has been updated to work with OpenSSL 1.1.X
+by z3ndrag0n (many thx to him for that).
 
 
 License:  The MIT License
