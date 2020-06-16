@@ -5,7 +5,7 @@ Date:     Jan 2008
 
 Updated:  June 2020
 
-Version:  0.5
+Version:  0.6
 
 Desc:     This is simply a file of mixed functions for the SSHA attack tool.
 
@@ -215,9 +215,11 @@ int GenerateHash(const char* digest, const char* value, const char* salt, char* 
 
     OpenSSL_add_all_digests();              // Load up all the possible digests
 
+    /*
     if(!(digest || value || buffer)) {      // make sure we have valid data
         return -1;
     }
+    */
 
     md = EVP_get_digestbyname(digest);      // Load up the digest needed
 
@@ -266,6 +268,7 @@ This needs to be decoded back to binary and then encoded as hex
 for comparison purposes.
 ------------------------------------------------------------------------------------ */
 int ValidatePassword(const char *requestPW, const char *storedPW, const char *hashtype) {
+
     // while 1024 is way too big, its safe and irrelevent
     char buffer[MAX_BUF_SIZE], binaryPW[MAX_BUF_SIZE];
     char formattedPW[MAX_BUF_SIZE], salt[MAX_BUF_SIZE];
@@ -293,19 +296,27 @@ int ValidatePassword(const char *requestPW, const char *storedPW, const char *ha
             } else {
                 start = 9;
             }
-            strcpy(binaryPW, storedPW);                        // copy storedPW into binaryPW
+            //strcpy(binaryPW, storedPW);                        // copy storedPW into binaryPW
+            if (strlcpy(binaryPW, storedPW, sizeof(binaryPW)) >= sizeof(binaryPW)) {
+                return FALSE;
+            }
             int n = DecodeBase64(temp, binaryPW + start);      // base-64 decode into temp
 
             if (strcmp(hashtype, "SHA1") == 0) {
-                strcpy(tempSalt, temp + 20);                     // grab salt from temp & cpy to tempSalt
+                //strcpy(tempSalt, temp + 20);                     // grab salt from temp & cpy to tempSalt
+                strlcpy(tempSalt, temp + 20, sizeof(tempSalt));
             } else if (strcmp(hashtype, "SHA224") == 0) {
-                strcpy(tempSalt, temp + 28);
+                //strcpy(tempSalt, temp + 28);
+                strlcpy(tempSalt, temp + 28, sizeof(tempSalt));
             } else if (strcmp(hashtype, "SHA256") == 0) {
-                strcpy(tempSalt, temp + 32);
+                //strcpy(tempSalt, temp + 32);
+                strlcpy(tempSalt, temp + 32, sizeof(tempSalt));
             } else if (strcmp(hashtype, "SHA384") == 0) {
-                strcpy(tempSalt, temp + 48);
+                //strcpy(tempSalt, temp + 48);
+                strlcpy(tempSalt, temp + 48, sizeof(tempSalt));
             } else if (strcmp(hashtype, "SHA512") == 0) {
-                strcpy(tempSalt, temp + 64);
+                //strcpy(tempSalt, temp + 64);
+                strlcpy(tempSalt, temp + 64, sizeof(tempSalt));
             }
             ToHex(temp, tempArr, n);                           // conv to hex in tempArr
 
@@ -321,9 +332,16 @@ int ValidatePassword(const char *requestPW, const char *storedPW, const char *ha
                 strncpy(formattedPW, tempArr, 128);
             }
 
-            strcpy(finalRequestPW, requestPW);                 // copy requestPW to an unsigned array
-            strcat(finalRequestPW, tempSalt);                  // cat the binary salt to binary array
-            GenerateHash(hashtype, finalRequestPW, NULL, buffer);// generate a salted sha hash
+            //strcpy(finalRequestPW, requestPW);                    // copy requestPW to an unsigned array
+            if (strlcpy(finalRequestPW, requestPW, sizeof(finalRequestPW)) >= sizeof(finalRequestPW)) {
+                return FALSE;
+            }
+            //strcat(finalRequestPW, tempSalt);                     // cat the binary salt to binary array
+            if (strlcat(finalRequestPW, tempSalt, sizeof(finalRequestPW)) >= sizeof(finalRequestPW)) {
+                return FALSE;
+            }
+            GenerateHash(hashtype, finalRequestPW, NULL, buffer); // generate a salted sha hash
+
         }
 
         // perform the actual comparison of formattedPW and buffer
@@ -368,7 +386,7 @@ void doDictAttack(char *inhash, char *dictfile, time_t t0, const char *hashtype)
 
     FILE *infile;
     char line[100];
-    int lcount;
+    int lcount = 0;
     int hit = 0;
     time_t t1;
 

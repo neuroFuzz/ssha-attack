@@ -5,7 +5,7 @@ Date:     Jan 2008
 
 Updated:  June 2020
 
-Version:  0.5
+Version:  0.6
 
 Desc:
     This simple prog is the first release of a tool to attack,
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
     char *custom = NULL;
     size_t custom_len = 0;
     char *hashtype = NULL;
-    int c, set, min = 0, max = 0;
+    int c, set = 0, min = 0, max = 0;
     time_t t0, t1;
     char buffer[1024];
 

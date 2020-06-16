@@ -1,8 +1,8 @@
 CFLAGS = -O3
-LIBS = -lssl -lcrypto
+LIBS = -lssl -lcrypto -lbsd
 OBJS = functions.o ssha_attack.o
 
-all: $(OBJS) 
+all: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o ssha_attack
 
 ssha_attack.o: ssha_attack.c
@@ -12,5 +12,3 @@ functions.o: functions.c
 
 clean:
 	rm -f ssha_attack *.o
-
-

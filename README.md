@@ -1,4 +1,10 @@
 # ssha-attack
+
+<a href="https://scan.coverity.com/projects/ssha-attack">
+  <img alt="Coverity Scan Build Status"
+       src="https://img.shields.io/coverity/scan/21325.svg"/>
+</a>
+
 SSHA Attack
 
 This simple prog is the first release of a tool to attack, or try to crack,
@@ -12,6 +18,10 @@ Read the usage statement for more details, ./ssha_attack -h.
 The prog currently supports dictionary style attacks as well as some brute-force models.
 
 The OpenSSL lib's are required.
+
+If you are on Ubuntu also add the following:
+
+sudo apt install libbsd-dev
 
 To compile untar and:
 
