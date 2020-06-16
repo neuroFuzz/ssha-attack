@@ -3,7 +3,7 @@ Author:   Andres Andreu <andres [at] neurofuzzsecurity dot com>
 
 Date:     Jan 2008
 
-Updated:  June 2020  
+Updated:  June 2020
 
 Version:  0.5
 
@@ -46,26 +46,6 @@ void stripnl(char *str) {
     (str[strlen(str) - 1] == 10))) {
         str[strlen(str) - 1] = 0;
     }
-}
-
-/* ------------------------------------------------------------------------------------
-Function: substring_r
-Params:   char* --> the char array to hold resulting data
-char* --> the char array to be processed
-int --> starting index
-int --> ending index
-Desc:     Chops up a string based on the indexes passed in.
-Return:   Nothing
------------------------------------------------------------------------------------- */
-void *substring_r(char *buffer, char *str, int start, int end) {
-
-    int i, x = 0;
-
-    for (i = start; i <= end; i++)
-    buffer[x++] = str[i];
-
-    buffer[x] = '\0';
-
 }
 
 /* ------------------------------------------------------------------------------------
